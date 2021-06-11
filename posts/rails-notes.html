@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA=Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" conent="Jorge Kalmbach">
+    <meta name="description" content="Ready for Review - Rails Notes">
+    <title>Rails Notes - Ready for Review</title>
+    <link rel="stylesheet" type="text/css" href="../css/tachyons.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet" type="text/css">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-46704501-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-46704501-1');
+    </script>
+  </head>
+  <body class="inconsolata pa0">
+    <div class="center mt5 w-80 mw7">
+      <header class="overflow-hidden">
+        <div class="w-100 tl-l tc-ns">
+          <ul class="list ma0 mt2 ml1 pa0">
+            <li class="di">
+              <a class="link gray" href="https://kalmbach.github.io/ready-for-review">
+                Home
+              </a>
+            </li>
+            <span class="gray">|</span>
+            <li class="di">
+              <a class="link gray" href="https://github.com/kalmbach?tab=repositories">
+                Repositories
+              </a>
+            </li>
+          </ul>
+        </div>
+      </header>
+
+      <div class="center tc ma5">
+        <h1 class="ma1 light-red" style="font-size:4rem;">Rails Notes</h1>
+        <div class="f4 gray">by Jorge Kalmbach</div>
+      </div>
+
+
+
+      <h3>Annotate all the things!</h3>
+      <p class="f4 gray lh-copy tj ma2 pb4">
+I acknowledge that I am not a regular user of annotations, but this may change now, since Rails 6,
+there is a built in command to search the code for comments beginning with a specific keyword.
+      </p>
+      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
+        $ <span class="washed-red">bin/rails</span> <span class="light-red">notes</span>
+      </code>
+
+      <p class="f4 gray lh-copy tj ma2 pb4">
+By default, it will search in <span class="f4 light-red b">app</span>, 
+<span class="f4 light-red b">config</span>, <span class="f4 light-red b">db</span>, 
+<span class="f4 light-red b">lib</span>, and <span class="f4 light-red b">test</span> directories 
+for <span class="f4 light-red b">FIXME</span>, <span class="f4 light-red b">OPTIMIZE</span>, and 
+<span class="f4 light-red b">TODO</span> annotations in files with extension 
+<span class="f4 light-red b">.builder</span>, <span class="f4 light-red b">.rb</span>, 
+<span class="f4 light-red b">.rake</span>, <span class="f4 light-red b">.yml</span>, 
+<span class="f4 light-red b">.yaml</span>, <span class="f4 light-red b">.ruby</span>, 
+<span class="f4 light-red b">.css</span>, <span class="f4 light-red b">.js</span>, and 
+<span class="f4 light-red b">.erb</span>.
+      </p>
+
+      <p class="f4 gray lh-copy tj ma2 pb4">
+It will output the file and line where the annotation is located:
+      </p>
+
+      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
+        $ <span class="washed-red">bin/rails</span> <span class="light-red">notes</span>
+        <br />app/controllers/application_controller.rb:
+        <br />&ensp; * [2] [TODO] Do something
+        <br />&ensp; * [3] [OPTIMIZE] Optimize something
+        <br />&ensp; * [4] [FIXME] Fix something
+      </code>
+
+      <p class="f4 gray lh-copy tj ma2 pb4">
+Well, but how I add one of those in my code, do they grow when nobody is looking? Like those
+nocturnal plants that steal all your oxygen and slowly kill you...&ensp;&ensp;No, to add an
+annotation you simply have to add a comment, but seriously, watch out those plants.
+      </p>
+
+      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
+        <span class="washed-red">class</span> 
+          <span class="light-red">ApplicationController &lt; ActionController::Base</span>
+          <br />&ensp;# TODO: Do something
+          <br />&ensp;# OPTIMIZE: Optimize something
+          <br />&ensp;# FIXME: Fix something
+        <br /><span class="washed-red">end</span>
+      </code>
+
+
+      <p class="f4 gray lh-copy tj ma2 pb4">
+You can search for specific annotations by using the <span class="f4 light-red b">--annotations</span>
+argument, or <span class="f4 light-red b">-a</span> for short.
+      </p>
+
+      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
+        $ <span class="washed-red">bin/rails</span> <span class="light-red">notes --annotations REVIEW</span>
+        <br />app/controllers/application_controller.rb:
+        <br />&ensp;* [7] Review all the things!
+      </code>
+
+      <p class="f4 gray lh-copy tj ma2 pb4">
+You can add more default tags to search for by using 
+<span class="f4 light-red b">config.annotations.register_tags</span>. It receives a list of tags.
+      </p>
+
+      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
+        config.<span class="washed-red">annotations.register_tags</span>
+        (<span class="washed-red">"REVIEW", "REFACTOR"</span>)
+
+        <br />&ensp;
+        <br />$ <span class="washed-red">bin/rails</span> <span class="light-red">notes</span>
+        <br />app/controllers/justice_leage.rb:
+        <br />&ensp; * [2] [REVIEW] Seriously, have a look before committing
+        <br />&ensp; * [3] [REFACTOR] more reboots, more money
+      </code>
+
+
+      <p class="f4 gray lh-copy tj ma2 pb4">
+Now we know how to add annotations in our code that we will probably never remember and if we do we
+will look for them with a <span class="f4 light-red b">grep</span>
+      </p>
+
+      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
+        $ <span class="washed-red">grep</span> <span class="light-red">REVIEW * -r -n</span>
+        <br /><span class="light-red">app/controllers/application_controller.rb</span>:<span class="washed-red">7</span>:
+          &ensp;# <span class="washed-red">REVIEW</span>: Review all the things!
+      </code>
+
+      <p class="f4 gray lh-copy tj ma2 pb4">
+Until the next one.
+      </p>
+    </div>
+  </body>
+</html>
