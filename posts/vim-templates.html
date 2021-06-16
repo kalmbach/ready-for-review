@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA=Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" conent="Jorge Kalmbach">
+    <meta name="description" content="Ready for Review - Vim Templates">
+    <title>Vim Templates - Ready for Review</title>
+    <link rel="stylesheet" type="text/css" href="../css/tachyons.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet" type="text/css">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-46704501-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-46704501-1');
+    </script>
+  </head>
+  <body class="inconsolata pa0">
+    <div class="center mt5 w-80 mw7">
+      <header class="overflow-hidden">
+        <div class="w-100 tl-l tc-ns">
+          <ul class="list ma0 mt2 ml1 pa0">
+            <li class="di">
+              <a class="link gray" href="https://kalmbach.github.io/ready-for-review">
+                Home
+              </a>
+            </li>
+            <span class="gray">|</span>
+            <li class="di">
+              <a class="link gray" href="https://github.com/kalmbach?tab=repositories">
+                Repositories
+              </a>
+            </li>
+          </ul>
+        </div>
+      </header>
+
+      <div class="center tc ma5">
+        <h1 class="ma1 light-red" style="font-size:4rem;">Vim Templates</h1>
+        <div class="f4 gray">by Jorge Kalmbach</div>
+      </div>
+
+      <h3>Templates and Skeletons</h3>
+      <p class="f4 gray lh-copy tj ma2 pb4">
+Vim allows us to use skeleton files (templates) to scaffold the creation of new files. 
+That is, whenever a new file is created the content of the template is read into the Vim buffer.
+For example, for a <span class="f4 light-red b">javascript</span> file it can be a an empty 
+<span class="f4 light-red">{choose your favorite pattern}</span> pattern file, for a 
+<span class="f4 light-red b">Rails</span> controller can be an empty controller class, for a
+<span class="f4 light-red b">Bash</span> script can be a file starting with the #! shebang line.
+The idea is that for a specific file extension like <span class="f4 light-red">.rb</span>, 
+<span class="f4 light-red">.js</span> or <span class="f4 light-red">.sh</span>, Vim can populate
+a new file with the contents of a template.
+      </p>
+
+      <h3>An example skeleton file</h3>
+      <p class="f4 gray lh-copy tj ma2 pb4">
+Let's create a sample javascript function template, and assume for now that we are psychopaths that
+store each javascript function in their own isolated file, the template:
+      </p>
+
+      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
+        <span class="light-red">function</span> Foo() {
+          <span class="washed-red">return</span> true;
+        }
+      </code>
+
+      <p class="f4 gray lh-copy tj ma2 pb4">
+We create and save this template in <span class="f4 light-red">~/.vim/templates/function.js</span>
+You can save your templates wherever you want, but that seems to be a good place for them. The name is
+irrelevant, but if you plan to have a lot of templates, better name them with something accordingly to 
+their content.
+      </p>
+      <h3>Populating new files</h3>
+      <p class="f4 gray lh-copy tj ma2 pb4">
+To use this skeleton template when creating a new javascript file we need to add the following line
+to our <span class="f4 light-red b">vimrc</span> file:
+      </p>
+
+      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
+        <span class="light-red">autocmd</span> <span class="washed-red">BufNewFile</span>  *.js  
+        <span class="washed-red">0read ~/.vim/templates/function.js</span>
+      </code>
+
+      <p class="f4 gray lh-copy tj ma2 pb4">
+Which translates to: When a new file with extension <span class="f4 light-red b">.js</span> is created,
+insert the content of <span class="f4 light-red">~/.vim/templates/function.js</span> at the beginning
+of the buffer.
+      </p>
+
+      <p class="f4 gray lh-copy tj ma2 pb4">
+What if I don't want to autoload the template in all my new javascript files, just the ones suffixed
+with <span class="f4 light-red">_function.js</span>, not a problem, just change the match pattern on the
+<span class="f4 ligth-red b">autocmd</span>:
+      </p>
+
+      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
+        <span class="light-red">autocmd</span> <span class="washed-red">BufNewFile</span>  *_function.js
+        <span class="washed-red">0read ~/.vim/templates/function.js</span>
+      </code>
+
+      <p class="f4 gray lh-copy tj ma2 pb4">
+This is excellent! Yay, now everytime I create a new .js file the template will be loaded into the buffer, 
+wait... every time? This will get tedious very soon. Can we load templates at demand? I'm glad you asked,
+yes, yes we can.
+      </p>
+
+      <h3>Inserting templates at demand</h3>
+      <p class="f4 gray lh-copy tj ma2 pb4">
+As you probably already realized, we can use the <span class="f4 light-red b">read</span> command to insert
+the content of any file into the buffer:
+      </p>
+
+      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
+        # will insert the content of the template below the current line
+        <br />:<span class="light-red">read</span> <span class="washed-red">~/.vim/templates/function.js</span>
+        <br />&ensp;
+        <br /># Will insert the content of the template at the start of the file
+        <br />:<span class="light-red">0read</span> <span class="washed-red">~/.vim/templates/function.js</span>
+      </code>
+
+      <p class="f4 gray lh-copy tj ma2 pb4">
+Now I have to type the whole path? I hear you, why spend 5 seconds typing the full path to the file 
+if we can add functions and map keys-combinations to them:
+      </p>
+
+      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
+        <span class="light-red">function!</span> LoadTemplate(template) abort
+        <br />&ensp;<span class="washed-red">execute "read ~/.vim/templates/". a:template</span>
+        <br /><span class="light-red">endfunction</span>
+        <br />&ensp;
+        <br /><span class="light-red">nnoremap</span> &lt;C-t&gt;f 
+        <span class="washed-red">:call LoadTemplate("function.js")&lt;CR&gt;</span>
+      </code>
+
+      <p class="f4 gray lh-copy tj ma2 pb2">
+And now you can use <span class="f4 light-red b">Ctrl+t f</span> to load the skeleton and map tons of key 
+combinations with every letter on your keyboard to different templates and memorize all of them like an 
+<span class="f4 light-red">emacs</span> user, or call the function with 
+      </p>
+      <p class="f4 gray lh-copy tc ma2 pb2">
+<span class="f4 light-red b bg-light-gray tc pl4 pr4">:call LoadTemplate("function.js")</span> 
+      </p>
+      <p class="f4 gray lh-copy tj ma2 pb2">
+to insert your template bellow the current line; which seems to be longer than our initial approach, let's measure: 
+      </p>
+      <p class="f4 gray lh-copy tj ma2 pb4">
+<span class="light-red">read ~/.vim/templates/function.js</span> =&gt; <span class="f4 light-red b">33</span> keyboard strokes
+<br /><span class="light-red">call LoadTemplate("function.js")</span> =&gt; <span class="f4 light-red b">32</span> keyboard strokes
+<br />&ensp;
+<br />renaming function to LT...
+<br /><span class="light-red">call LT("function.js")</span> =&gt; <span class="f4 light-red b">22</span> keyboard strokes, Flawless Victory!
+      </p>
+
+      <h3>Having fun</h3>
+      <p class="f4 gray lh-copy tj ma2 pb4">
+Templates are fun, you can change <span class="f4 light-red b">BufNewFile</span> with 
+<span class="f4 light-red b">BufWritePre</span>, create a signature template and append it to the file
+on save! Now, that is an evil plan... 
+      </p>
+
+      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
+        <span class="light-red">autocmd</span> <span class="washed-red">BufWritePre</span> *
+        <span class="washed-red">$read ~/.vim/templates/signature</span>
+      </code>
+
+      <p class="f4 gray lh-copy tj ma2 pb4">
+Until the next one.
+      </p>
+    </div>
+  </body>
+</html>
