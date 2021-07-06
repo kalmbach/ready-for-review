@@ -132,9 +132,9 @@
         <span class="washed-red">class</span> <span class="light-red">Chef</span>
         <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cook(meal = :breakfast)</span>
         <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">case</span> meal
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :breakfast <span class="washed-red">then</span> do_breakfast
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :lunch <span class="washed-red">then</span> do_lunch
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :dinner <span class="washed-red">then</span> do_dinner
+        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :breakfast <span class="washed-red">then</span> make_breakfast
+        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :lunch <span class="washed-red">then</span> make_lunch
+        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :dinner <span class="washed-red">then</span> make_dinner
         <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">end
 
         <br />&ensp;&ensp;<span class="washed-red">end</span>
@@ -156,7 +156,7 @@
         <span class="washed-red">class</span> <span class="light-red">Saucier</span> &lt; <span class="light-red">Chef</span>
         <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cook(meal = :sauce)</span>
         <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">case</span> meal
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :sauce <span class="washed-red">then</span> do_sauce
+        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :sauce <span class="washed-red">then</span> make_sauce
         <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">else</span>
         <br />&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<span class="washed-red">super</span>
         <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">end
@@ -182,12 +182,12 @@
         <span class="washed-red">class</span> <span class="light-red">Chef</span>
         <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cook(meal = :breakfast)</span>
         <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">case</span> meal
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :breakfast <span class="washed-red">then</span> do_breakfast
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :lunch <span class="washed-red">then</span> do_lunch
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :dinner <span class="washed-red">then</span> do_dinner
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :sauce <span class="washed-red">then</span> do_sauce
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :dessert <span class="washed-red">then</span> do_dessert
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :cake <span class="washed-red">then</span> do_cake
+        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :breakfast <span class="washed-red">then</span> make_breakfast
+        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :lunch <span class="washed-red">then</span> make_lunch
+        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :dinner <span class="washed-red">then</span> make_dinner
+        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :sauce <span class="washed-red">then</span> make_sauce
+        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :dessert <span class="washed-red">then</span> make_dessert
+        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :cake <span class="washed-red">then</span> make_cake
         <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">end
         <br />&ensp;&ensp;<span class="washed-red">end</span>
         <br /><span class="washed-red">end</span>
@@ -208,17 +208,17 @@
         <span class="washed-red">class</span> <span class="light-red">Saucier</span> &lt; <span class="light-red">Chef</span>
         <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cook(meal = :sauce)</span>
         <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">case</span> meal
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :sauce <span class="washed-red">then</span> do_sauce
+        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :sauce <span class="washed-red">then</span> make_sauce
         <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">else</span>
         <br />&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<span class="washed-red">super</span>
         <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">end
         <br />&ensp;&ensp;<span class="washed-red">end</span>
         <br /><span class="washed-red">end</span>
         <br />&ensp;&ensp;
-        <br /><span class="washed-red">class</span> <span class="light-red">Baker</span>
+        <br /><span class="washed-red">class</span> <span class="light-red">Baker</span> &lt; <span class="light-red">Chef</span>
         <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cook(meal = :cake)</span>
         <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">case</span> meal
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :cake <span class="washed-red">then</span> do_cake
+        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :cake <span class="washed-red">then</span> make_cake
         <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">else</span>
         <br />&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<span class="washed-red">super</span>
         <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">end
@@ -228,7 +228,7 @@
 
       <p class="f4 gray lh-copy tj ma2 pb4">
       These smaller interfaces also makes it easier to add a new <span class="f4 light-red b">Saucier</span> or a new <span class="f4 light-red b">Baker</span>
-      considering we only need to implement a single method on each one, <span class="f4 light-red b">do_sauce</span> and <span class="f4 light-red b">do_cake</span>.
+      considering we only need to implement a single method on each one, <span class="f4 light-red b">make_sauce</span> and <span class="f4 light-red b">make_cake</span>.
       </p>
 
       <h3>Dependency Inversion</h3>
@@ -241,7 +241,7 @@
       </p>
 
       <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
-        <span class="washed-red">class</span> <span class="light-red">Chef</span> &lt; <span class="light-red">Chef</span>
+        <span class="washed-red">class</span> <span class="light-red">Chef</span>
         <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cut_onions_with(Knife)</span>
         <br />&ensp;&ensp;<span class="washed-red">end</span>
         <br /><span class="washed-red">end</span>
@@ -255,7 +255,7 @@
       </p>
 
       <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
-        <span class="washed-red">class</span> <span class="light-red">Chef</span> &lt; <span class="light-red">Chef</span>
+        <span class="washed-red">class</span> <span class="light-red">Chef</span>
         <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cut_onions_with(tool)</span>
         <br />&ensp;&ensp;<span class="washed-red">end</span>
         <br /><span class="washed-red">end</span>
