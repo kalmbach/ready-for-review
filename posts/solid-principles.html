@@ -7,8 +7,6 @@
     <meta name="author" conent="Jorge Kalmbach">
     <meta name="description" content="Ready for Review - SOLID Principles">
     <title>SOLID Principles - Ready for Review</title>
-    <link rel="stylesheet" type="text/css" href="../css/tachyons.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet" type="text/css">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-46704501-1"></script>
@@ -19,6 +17,9 @@
 
       gtag('config', 'UA-46704501-1');
     </script>
+
+    <link rel="stylesheet" type="text/css" href="../css/prism.css">
+    <link rel="stylesheet" type="text/css" href="../css/tachyons.min.css">
   </head>
   <body class="inconsolata pa0">
     <div class="center mt5 w-80 mw7">
@@ -46,13 +47,13 @@
       </div>
 
       <h3>What is SOLID?</h3>
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
         Is an acronym for five object-oriented design (ODD) principles that was coined by 
         <span class="f4 light-red b">Michael Feathers</span> and popularized by 
         <span class="f4 light-red b">Robert Martin</span>. Here's a short definition of each one:
       </p>
 
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
         <span class="f4 light-red b">S</span> - <span class="f4 light-red">Single Responsibility</span>
         <br /><span class="f4 light-red b">O</span> - <span class="f4 light-red">Open-Closed</span>
         <br /><span class="f4 light-red b">L</span> - <span class="f4 light-red">Liskov Substituion</span>
@@ -60,208 +61,227 @@
         <br /><span class="f4 light-red b">D</span> - <span class="f4 light-red">Dependency Inversion</span>
       </p>
 
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
       These principles establish good practices for building software so that is easier to change and maintain.
       </p>
 
       <h3>Single Responsibility</h3>
-      <p class="f4 gray lh-copy tc ma2 pb4 i">
+      <p class="tc i">
       "A class should have one, and only one, reason to change."
       </p>
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
       This principle is the most important and fundamental of SOLID, the "responsibility" is defined as a reason
       to change. Gather together the things that change for the same reasons, separate those things that change
       for different reasons. Meaning that a class should have only one job. 
       </p>
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
       As an example consider this class:
       </p>
 
-      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
-        <span class="washed-red">class</span> <span class="light-red">Jarvis</span>
-        <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">drive</span>; <span class="washed-red">end</span>
-        <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cook</span>; <span class="washed-red">end</span>
-        <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">paint</span>; <span class="washed-red">end</span>
-        <br /><span class="washed-red">end</span>
-      </code>
+      <pre>
+        <code class="language-ruby">
+  class Jarvis
+    def drive; end
+    def cook; end
+    def paint; end
+  end
+        </code>
+      </pre>
 
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
       This class will change for 3 reasons, if <span class="f4 light-red b">Jarvis</span> needs to learn a new route, 
       a new recipe or a new painting technique. Instead we should have one class for each of these jobs:
       </p>
-      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
-        <span class="washed-red">class</span> <span class="light-red">Driver</span>
-        <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">drive</span>; <span class="washed-red">end</span>
-        <br /><span class="washed-red">end</span>
-        <br />&ensp;
-        <br /><span class="washed-red">class</span> <span class="light-red">Chef</span>
-        <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cook</span>; <span class="washed-red">end</span>
-        <br /><span class="washed-red">end</span>
-        <br />&ensp;
-        <br /><span class="washed-red">class</span> <span class="light-red">Painter</span>
-        <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">paint</span>; <span class="washed-red">end</span>
-        <br /><span class="washed-red">end</span>
-      </code>
+
+      <pre>
+        <code class="language-ruby">
+  class Driver
+    def drive; end
+  end
+
+  class Chef
+    def cook; end
+  end
+
+  class Painter
+    def paint; end
+  end
+        </code>
+      </pre>
 
       <h3>Open-Closed</h3>
-      <p class="f4 gray lh-copy tc ma2 pb4 i">
+      <p class="tc i">
       "You should be able to extend a classes behavior, without modifying it."
       </p>
 
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
       Classes should be open to extensions and closed to modifications. If the behavior of a class is changed,
       it will affect all the systems using that class, if a class needs to do more things, the ideal approach
       is to extend the current functionality. Going back to our <span class="f4 light-red b">Chef</span> class:
       </p>
 
-      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
-        <span class="washed-red">class</span> <span class="light-red">Chef</span>
-        <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cook</span>
-        <br />&ensp;&ensp;&ensp;&ensp;# make breakfast
-        <br />&ensp;&ensp;<span class="washed-red">end</span>
-        <br /><span class="washed-red">end</span>
-      </code>
+      <pre>
+        <code class="language-ruby">
+  class Chef
+    def cook
+      # make_breakfast
+    end
+  end
+        </code>
+      </pre>
 
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
       If we change the <span class="f4 light-red b">cook</span> method to make <span class="f4 light-red b">lunch</span> it
       will break all the places where the system expects the <span class="f4 light-red b">Chef</span> to make a <span class="f4 light-red b">breakfast</span>.
       Instead we should extend the method:
       </p>
 
-      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
-        <span class="washed-red">class</span> <span class="light-red">Chef</span>
-        <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cook(meal = :breakfast)</span>
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">case</span> meal
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :breakfast <span class="washed-red">then</span> make_breakfast
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :lunch <span class="washed-red">then</span> make_lunch
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :dinner <span class="washed-red">then</span> make_dinner
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">end
-
-        <br />&ensp;&ensp;<span class="washed-red">end</span>
-        <br /><span class="washed-red">end</span>
-      </code>
+      <pre>
+        <code class="language-ruby">
+  class Chef
+    def cook(meal = :breakfast)
+      case meal
+      when :breakfast then make_breakfast
+      when :lunch then make_lunch
+      when :dinner then make_dinner
+      end
+    end
+  end
+        </code>
+      </pre>
 
       <h3>Liskov Substitution</h3>
-      <p class="f4 gray lh-copy tc ma2 pb4 i">
+      <p class="tc i">
       "Derived classes must be sustitutable for their base classes."
       </p>
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
       This principle was created by <span class="f4 light-red b">Barbara Liskov</span>. If a class B is a subtype of A, then any
       objects of type A in the program can be replaced with objects of type B without altering any of the expected or desired 
       behavior of that program. Continuing with our delicious theme, we can have a <span class="f4 light-red b">Saucier</span>, 
       a chef who specializes in sauces:
       </p>
 
-      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
-        <span class="washed-red">class</span> <span class="light-red">Saucier</span> &lt; <span class="light-red">Chef</span>
-        <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cook(meal = :sauce)</span>
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">case</span> meal
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :sauce <span class="washed-red">then</span> make_sauce
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">else</span>
-        <br />&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<span class="washed-red">super</span>
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">end
-        <br />&ensp;&ensp;<span class="washed-red">end</span>
-        <br /><span class="washed-red">end</span>
-      </code>
+      <pre>
+        <code class="language-ruby">
+  class Saucier &lt; Chef
+    def cook(meal = :sauce)
+      case meal
+      when :sauce then make_sauce
+      else
+        super
+      end
+    end
+  end
+        </code>
+      </pre>
 
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
       This <span class="f4 light-red b">Saucier</span> should be able to make sauces and in adition breakfasts, lunches and dinners.
       If our digital <span class="f4 light-red b">Chef</span> gets sick, the <span class="f4 light-red b">Saucier</span> can replace it
       without problems. The child class should be able to do everything the parent class can do.
       </p>
 
       <h3>Interface Segregation</h3>
-      <p class="f4 gray lh-copy tc ma2 pb4 i">
+      <p class="tc i">
       "Make fine grained interfaces that are client specific."
       </p>
 
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
       We could have a <span class="f4 light-red b">Chef</span> class that does it all:
       </p>
-      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
-        <span class="washed-red">class</span> <span class="light-red">Chef</span>
-        <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cook(meal = :breakfast)</span>
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">case</span> meal
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :breakfast <span class="washed-red">then</span> make_breakfast
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :lunch <span class="washed-red">then</span> make_lunch
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :dinner <span class="washed-red">then</span> make_dinner
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :sauce <span class="washed-red">then</span> make_sauce
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :dessert <span class="washed-red">then</span> make_dessert
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :cake <span class="washed-red">then</span> make_cake
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">end
-        <br />&ensp;&ensp;<span class="washed-red">end</span>
-        <br /><span class="washed-red">end</span>
-      </code>
 
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <pre>
+        <code class="language-ruby">
+  class Chef
+    def cook(meal = :breakfast)
+      case meal
+      when :breakfast then make_breakfast
+      when :lunch then make_lunch
+      when :dinner then make_dinner
+      when :sauce then make_sauce
+      when :dessert then make_dessert
+      when :cake then make_cake
+      end
+    end
+  end
+        </code>
+      </pre>
+
+      <p>
       If we have a client that only wants a saucier, all the other methods for different meals will never be used, is
       wastefull and my introduce bugs unrelated to the purpose for what the client is using the <span class="f4 light-red b">Chef</span>.
       </p>
 
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
       Is better to have smaller interfaces  with less methods than a big one that satisfies all clients but with functions that will
       not be used by all of them. In our gastronomic example, if the <span class="f4 light-red b">Chef</span> class is required
       to make sauces and pastry, these actions will not be useful for all clients. 
       </p>
 
-      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
-        <span class="washed-red">class</span> <span class="light-red">Saucier</span> &lt; <span class="light-red">Chef</span>
-        <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cook(meal = :sauce)</span>
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">case</span> meal
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :sauce <span class="washed-red">then</span> make_sauce
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">else</span>
-        <br />&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<span class="washed-red">super</span>
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">end
-        <br />&ensp;&ensp;<span class="washed-red">end</span>
-        <br /><span class="washed-red">end</span>
-        <br />&ensp;&ensp;
-        <br /><span class="washed-red">class</span> <span class="light-red">Baker</span> &lt; <span class="light-red">Chef</span>
-        <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cook(meal = :cake)</span>
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">case</span> meal
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">when</span> :cake <span class="washed-red">then</span> make_cake
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">else</span>
-        <br />&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<span class="washed-red">super</span>
-        <br />&ensp;&ensp;&ensp;&ensp;<span class="washed-red">end
-        <br />&ensp;&ensp;<span class="washed-red">end</span>
-        <br /><span class="washed-red">end</span>
-      </code>
+      <pre>
+        <code class="language-ruby">
+  class Saucier &lt; Chef
+    def cook(meal = :sauce)
+      case meal
+      when :sauce then make_sauce
+      else
+        super
+      end
+    end
+  end
 
-      <p class="f4 gray lh-copy tj ma2 pb4">
+  class Baker &lt; Chef
+    def cook(meal = :cake)
+      case meal
+      when :cake then make_make
+      else
+        super
+      end
+    end
+  end
+        </code>
+      </pre>
+
+      <p>
       These smaller interfaces also makes it easier to add a new <span class="f4 light-red b">Saucier</span> or a new <span class="f4 light-red b">Baker</span>
       considering we only need to implement a single method on each one, <span class="f4 light-red b">make_sauce</span> and <span class="f4 light-red b">make_cake</span>.
       </p>
 
       <h3>Dependency Inversion</h3>
-      <p class="f4 gray lh-copy tc ma2 pb4 i">
+      <p class="tc i">
       "Depend on abstractions, not on concretions"
       </p>
 
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
       Let's consider our <span class="f4 light-red b">Chef</span> uses a <span class="f4 light-red b">Knife</span> to cut onions, I know, sophisticated some would say.
       </p>
 
-      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
-        <span class="washed-red">class</span> <span class="light-red">Chef</span>
-        <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cut_onions_with(Knife)</span>
-        <br />&ensp;&ensp;<span class="washed-red">end</span>
-        <br /><span class="washed-red">end</span>
-      </code>
+      <pre>
+        <code class="language-ruby">
+  class Chef
+    def cut_onions_with(Knife)
+    end
+  end
+        </code>
+      </pre>
 
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
       Awesome, Onions get chopped, but if we him a <span class="f4 light-red b">Sword</span> instead of a <span class="f4 light-red b">Knife</span>, 
       <span class="f4 light-red b">Chef</span> goes mad and sets the kitchen on fire. Why? Can't a sword cut onions? 
       <br />It's beacause the Chef relies on the details of the Knife implementation, modules should not depend on each other details, they should
       depend on the abstraction. In this case the abstraction is the tool being used to cut the onions.
       </p>
 
-      <code class="code bg-black-80 f6 pa4 ma2 mb4 dib light-gray">
-        <span class="washed-red">class</span> <span class="light-red">Chef</span>
-        <br />&ensp;&ensp;<span class="washed-red">def</span> <span class="light-red">cut_onions_with(tool)</span>
-        <br />&ensp;&ensp;<span class="washed-red">end</span>
-        <br /><span class="washed-red">end</span>
-      </code>
+      <pre>
+        <code class="language-ruby">
+  class Chef
+    def cut_onions_with(tool)
+    end
+  end
+        </code>
+      </pre>
 
-      <p class="f4 gray lh-copy tj ma2 pb4">
+      <p>
       <span class="f4 light-red b">Chef</span> does not need to know the particulars of the tool, the tool just needs to be able to do the work and 
       apply to certain characteristics, it should be able to cut onions with a <span class="f4 light-red b">Knife</span>, <span class="f4 light-red b">Sword</span>
       or <span class="f4 light-red b">Chainsaw</span>, as far as they have a <span class="f4 light-red">:cutting_edge</span> attribute and a <span class="f4 light-red">cut</span>
@@ -277,5 +297,6 @@
 Until the next one.
       </p>
     </div>
+    <script async src="../js/prism.js"></script>
   </body>
 </html>
