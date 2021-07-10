@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA=Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" conent="Jorge Kalmbach">
+    <meta name="description" content="Ready for Review - JSON Web Tokens">
+    <title>JSON Web Tokens - Ready for Review</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-46704501-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-46704501-1');
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="../css/prism.css">
+    <link rel="stylesheet" type="text/css" href="../css/tachyons.min.css">
+  </head>
+  <body class="inconsolata pa0">
+    <div class="center mt5 w-80 mw7">
+      <header class="overflow-hidden">
+        <div class="w-100 tl-l tc-ns">
+          <ul class="list ma0 mt2 ml1 pa0">
+            <li class="di">
+              <a class="link gray" href="https://kalmbach.github.io/ready-for-review">
+                Home
+              </a>
+            </li>
+            <span class="gray">|</span>
+            <li class="di">
+              <a class="link gray" href="https://github.com/kalmbach?tab=repositories">
+                Repositories
+              </a>
+            </li>
+          </ul>
+        </div>
+      </header>
+
+      <div class="center tc ma5">
+        <h1 class="ma1 light-red" style="font-size:4rem;">JSON Web Tokens</h1>
+        <div class="f4 gray">by Jorge Kalmbach</div>
+      </div>
+
+      <h3>What is JSON Web Token?</h3>
+      <p class="post">
+      JSON Web Token (JWT) is an open standard 
+      (<span class="normal-red"><a class="link light-red" href="https://tools.ietf.org/html/rfc7519">RFC 7519</a></span>)
+      that defines a compact and safe way to transmit information between two parties as a JSON object. This object can optionally
+      be <span class="bold-red">signed</span> and <span class="bold-red">encrypted</span>, signed tokens can verify the integrity 
+      of the content whitin it, while encrypted tokens hide that information form others, making the communication verifiable,
+      reliable and secret.
+      </p>
+
+      <h3>What can I do with them?</h3>
+      <p class="post">
+      The most common usage of JWT is for <span class="bold-red">authorization</span> and <span class="bold-red">information exchange</span>. 
+      </p>
+
+      <p class="post">
+      <span class="bold-red">* Authorization</span>: After the user is authenticated, the server can generate a JWT with 
+      <span class="normal-red">claims</span> about his identity and authorization levels, such as <span class="normal-red">"logged in as 
+      administrator"</span>, the client will receive this token and can include it in every further request, allowing it to access services and 
+      resources permitted with that token. This is very useful in a <span class="normal-red">Single Sing On</span> context, with a central 
+      identity provider and services distributed across different domains.
+      </p>
+
+      <p class="post">
+      <span class="bold-red">* Information Exchange</span>: Signed JWT allows to transmit information between parties in a secure and trusted way,
+      you can verify the sender and the integrity of the message, making sure the content hasn't been tampered.
+      </p>
+
+      <h3>Structure</h3>
+      <p class="post">
+      JSON Web Tokens consist of three parts encoded separatedly using the Base64url Encoding
+      (<span class="normal-red"><a class="link light-red" href="https://datatracker.ietf.org/doc/html/rfc4648">RFC 4648</a></span>) and concatenated
+      using periods, therefore a JWT typically looks like the following, line breaks were introduced to improve readability:
+      </p>
+
+      <p class="post">
+      <span class="normal-red">
+        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
+        <br />eyJsb2dnZWRJbkFzIjoiYWRtaW4iLCJpYXQiOjE0MjI3Nzk2Mzh9.
+        <br />gzSraSYS8EXBxLN_oWnFSRgCzcmJmMjLiuyu5CSpyHI
+      </span>
+      </p>
+
+      <p class="post">
+      These three parts are the <span class="bold-red">Header</span>, <span class="bold-red">Payload</span> and <span class="bold-red">Signature</span>, which
+      are encoded and concatenated as <span class="normal-red">header.payload.signature</span>
+      </p>
+
+      <h3>Header</h3>
+      <p class="post">
+      The <span class="bold-red">header</span> consists of two entries that identifies which algorithm is used to generate the signature and the type of the token.
+      Typical cryptographic algorithms used are <span class="normal-red">HMAC</span> with SHA-256 (<span class="bold-red">HS256</span>)
+      and <span class="normal-red">RSA Signature</span> with SHA-256 (<span class="bold-red">RS256</span>). The JSON Web Altorithms 
+      (<span class="normal-red"><a class="link light-red" href="https://datatracker.ietf.org/doc/html/rfc7518">RFC 7518</a></span>) registers these and many others
+      to be used for both authentication and encryption.
+      </p>
+
+      <pre>
+        <code class="language-javascript">
+  {
+    "alg": "HS256",
+    "typ": "JWT"
+  }
+        </code>
+      </pre>
+
+      <p class="post">
+      The <span class="normal-red">"typ"</span> parameter is used by JWT applications when objects that are not JWTs could also be present.
+      </p>
+
+      <h3>Payload</h3>
+      <p class="post">
+      The middle part of the token is the <span class="bold-red">payload</span>, which contains the <span class="norma-red">claims</span>, these are statements
+      about an entity and additional data. Note that the claims contained in the payload of a JWT is readable by anyone. If the token is signed it will 
+      be protected against tampering. Do not put sensible information in the payload or header elements of a JWT unless is encrypted.
+      </p>
+
+      <pre>
+        <code class="language-javascript">
+  {
+    "sub": "1234",
+    "name": "Evil Admin"
+    "role": "administrator"
+  }
+        </code>
+      </pre>
+
+      <p class="post">
+      There are three types of claims: <span class="normal-red">registered</span>, <span class="normal-red">public</span> and <span class="normal-red">private</span>.
+      </p>
+
+      <p class="post">
+      <span class="bold-red">registered</span>: The JWT specification defines seven Registered Claim Names 
+      (<span class="normal-red"><a class="link light-red" href="https://datatracker.ietf.org/doc/html/rfc7519#section-4.1">RFC7519#Section-4.1</a></span>)
+      which are the standard fields commonly included in tokens, these are not mandatory but recommended, to provide a set of useful, interoperable claims. These are: 
+      </p>
+      <p class="post pl4">
+        <span class="normal-red">"iss"</span>: Issuer, identifies who issued the JWT.
+        <br /><span class="normal-red">"sub"</span>: Subject, the claims in a JWT are normally statements about the subject.
+        <br /><span class="normal-red">"aud"</span>: Audience, identifies the recipients that the JWT is intended for.
+        <br /><span class="normal-red">"exp"</span>: Expiration Time, identifies the expiration time on or after which the JWT MUST NOT be accepted for processing.
+        <br /><span class="normal-red">"nbf"</span>: Not Before, identifies the time before which the JWT MUST NOT be accepted for processing.
+        <br /><span class="normal-red">"iat"</span>: Issued At, identifies the time at which the JWT was issued.
+        <br /><span class="normal-red">"jti"</span>: JWT ID, provides a unique identifier for the JWT.
+      </p>
+
+      <p class="post">
+      <span class="bold-red">public</span>: These can be defined at will but to avoid collisions they should be registered in the 
+      <span class="normal-red"><a class="link light-red" href="https://www.iana.org/assignments/jwt/jwt.xhtml">IANA JSON Web Token Registry</a></span>. To name a few:
+      </p>
+      <p class="post pl4">
+        <span class="normal-red">"name"</span>: full name.
+        <br /><span class="normal-red">"zoneinfo"</span>: time zone.
+        <br /><span class="normal-red">"locale"</span>: locale.
+        <br /><span class="normal-red">"sid"</span>: session ID.
+      </p>
+
+      <p class="post">
+      <span class="bold-red">private</span>: These are custom claims created to share information between parties that agree on using them. Examples:
+      </p>
+
+      <p class="post pl4">
+        <span class="normal-red">"logged_in_as"</span>: authorization level of the subject, ie: Administrator.
+        <br /><span class="normal-red">"favourite_colur"</span>: Evil Red.
+        <br /><span class="normal-red">"os"</span>: operative system, ie: Linux.
+        <br /><span class="normal-red">"preferred_editor"</span>: VIM, the answer is always VIM.
+      </p>
+
+      <h3>Signature</h3>
+      <p class="post">
+      The signature securely validates the token. It's calculated by encoding the header and the payload using <span class="normal-red">Base64url Encoding</span> and concatenating
+      the two together with a period separator. That string is then run through the cryptographic algorithm specified in the header:
+      </p>
+
+      <pre><code class="language-javascript">
+  let signature = HS256(
+    base64UrlEncode(header) + '.' + base64UrlEncode(payload),
+    secret
+  );
+      </code></pre>
+
+      <p class="post">
+      The signature is used to verify that the message hasn't been adulterated in transit and if signed with a private key, it can also verify the legitimacy of the sender.
+      </p>
+
+      <h3>How to use them in authentication?</h3>
+      <p class="post">
+      When the user successfully logs in their credentials, a JWT will be returned. Whenever this user wants to access a protected route or resource, the user agent should send
+      the JWT, typically in the <span class="bold-red">Authorization</span> header using the <span class="bold-red">Bearer</span> schema. The content of the header should look
+      like the following:
+      </p>
+
+      <pre><code class="language-javascript">
+  Autorization: Bearer &lt;token&gt;
+      </code></pre>
+
+      <p class="post">
+      The server will check for a valid JWT in the <span class="normal-red">Authorization</span> header, and if it's present, the user will be allowed to access protected resources. 
+      </p>
+
+      <h3>Put these concepts in practice</h3>
+      <p class="post">
+      You can use <span class="normal-red"><a class="light-red link" href="https://jwt.io/#debugger-io">jwt.io</a></span> debugger to decode, verify and generate JWTs.
+      </p>
+      <p class="quote">
+      <img src="../img/json-web-tokens.png">
+      </p>
+
+
+      <p class="post">
+      JWTs are a great solution for authorization when you have a complex family of services, with a central identity provider and API for data access and client applications hosted in 
+      different domains. Another possible usage is to have short-lived JWTs or one-time JWTs to provide access to unregistered third parties to protected resources. It is a very versatile 
+      technology.
+      </p>
+
+      <p class="post">
+      References:
+      <br />0: <span class="normal-red"><a class="link light-red" href="https://datatracker.ietf.org/doc/html/rfc7519">https://datatracker.ietf.org/doc/html/rfc7519</a></span>
+      <br />1: <span class="normal-red"><a class="link light-red" href="https://www.iana.org/assignments/jwt/jwt.xhtml">https://www.iana.org/assignments/jwt/jwt.xhtml</a></span>
+      <br />2: <span class="normal-red"><a class="link light-red" href="https://en.wikipedia.org/wiki/JSON_Web_Token">https://en.wikipedia.org/wiki/JSON_Web_Token</a></span>
+      <br />3: <span class="normal-red"><a class="link light-red" href="https://jwt.io/introduction">https://jwt.io/introduction</a></span>
+      <br />4: <span class="normal-red"><a class="link light-red" href="https://jwt.io/#debugger-io">https://jwt.io/#debugger-io</a></span>
+      </p>
+
+      <p class="f4 gray lh-copy tj ma2 pb4">
+Until the next one.
+      </p>
+    </div>
+    <script async src="../js/prism.js"></script>
+  </body>
+</html>

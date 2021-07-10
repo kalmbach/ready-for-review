@@ -47,13 +47,13 @@
       </div>
 
       <h3>What is SOLID?</h3>
-      <p>
+      <p class="post">
         Is an acronym for five object-oriented design (ODD) principles that was coined by 
         <span class="f4 light-red b">Michael Feathers</span> and popularized by 
         <span class="f4 light-red b">Robert Martin</span>. Here's a short definition of each one:
       </p>
 
-      <p>
+      <p class="post">
         <span class="f4 light-red b">S</span> - <span class="f4 light-red">Single Responsibility</span>
         <br /><span class="f4 light-red b">O</span> - <span class="f4 light-red">Open-Closed</span>
         <br /><span class="f4 light-red b">L</span> - <span class="f4 light-red">Liskov Substituion</span>
@@ -61,20 +61,21 @@
         <br /><span class="f4 light-red b">D</span> - <span class="f4 light-red">Dependency Inversion</span>
       </p>
 
-      <p>
+      <p class="post">
       These principles establish good practices for building software so that is easier to change and maintain.
       </p>
 
       <h3>Single Responsibility</h3>
-      <p class="tc i">
+      <p class="quote">
       "A class should have one, and only one, reason to change."
       </p>
-      <p>
+
+      <p class="post">
       This principle is the most important and fundamental of SOLID, the "responsibility" is defined as a reason
       to change. Gather together the things that change for the same reasons, separate those things that change
       for different reasons. Meaning that a class should have only one job. 
       </p>
-      <p>
+      <p class="post">
       As an example consider this class:
       </p>
 
@@ -88,7 +89,7 @@
         </code>
       </pre>
 
-      <p>
+      <p class="post">
       This class will change for 3 reasons, if <span class="f4 light-red b">Jarvis</span> needs to learn a new route, 
       a new recipe or a new painting technique. Instead we should have one class for each of these jobs:
       </p>
@@ -110,11 +111,11 @@
       </pre>
 
       <h3>Open-Closed</h3>
-      <p class="tc i">
+      <p class="quote">
       "You should be able to extend a classes behavior, without modifying it."
       </p>
 
-      <p>
+      <p class="post">
       Classes should be open to extensions and closed to modifications. If the behavior of a class is changed,
       it will affect all the systems using that class, if a class needs to do more things, the ideal approach
       is to extend the current functionality. Going back to our <span class="f4 light-red b">Chef</span> class:
@@ -130,7 +131,7 @@
         </code>
       </pre>
 
-      <p>
+      <p class="post">
       If we change the <span class="f4 light-red b">cook</span> method to make <span class="f4 light-red b">lunch</span> it
       will break all the places where the system expects the <span class="f4 light-red b">Chef</span> to make a <span class="f4 light-red b">breakfast</span>.
       Instead we should extend the method:
@@ -151,10 +152,10 @@
       </pre>
 
       <h3>Liskov Substitution</h3>
-      <p class="tc i">
+      <p class="quote">
       "Derived classes must be sustitutable for their base classes."
       </p>
-      <p>
+      <p class="post">
       This principle was created by <span class="f4 light-red b">Barbara Liskov</span>. If a class B is a subtype of A, then any
       objects of type A in the program can be replaced with objects of type B without altering any of the expected or desired 
       behavior of that program. Continuing with our delicious theme, we can have a <span class="f4 light-red b">Saucier</span>, 
@@ -175,18 +176,18 @@
         </code>
       </pre>
 
-      <p>
+      <p class="post">
       This <span class="f4 light-red b">Saucier</span> should be able to make sauces and in adition breakfasts, lunches and dinners.
       If our digital <span class="f4 light-red b">Chef</span> gets sick, the <span class="f4 light-red b">Saucier</span> can replace it
       without problems. The child class should be able to do everything the parent class can do.
       </p>
 
       <h3>Interface Segregation</h3>
-      <p class="tc i">
+      <p class="quote">
       "Make fine grained interfaces that are client specific."
       </p>
 
-      <p>
+      <p class="post">
       We could have a <span class="f4 light-red b">Chef</span> class that does it all:
       </p>
 
@@ -207,12 +208,12 @@
         </code>
       </pre>
 
-      <p>
+      <p class="post">
       If we have a client that only wants a saucier, all the other methods for different meals will never be used, is
       wastefull and my introduce bugs unrelated to the purpose for what the client is using the <span class="f4 light-red b">Chef</span>.
       </p>
 
-      <p>
+      <p class="post">
       Is better to have smaller interfaces  with less methods than a big one that satisfies all clients but with functions that will
       not be used by all of them. In our gastronomic example, if the <span class="f4 light-red b">Chef</span> class is required
       to make sauces and pastry, these actions will not be useful for all clients. 
@@ -242,17 +243,17 @@
         </code>
       </pre>
 
-      <p>
+      <p class="post">
       These smaller interfaces also makes it easier to add a new <span class="f4 light-red b">Saucier</span> or a new <span class="f4 light-red b">Baker</span>
       considering we only need to implement a single method on each one, <span class="f4 light-red b">make_sauce</span> and <span class="f4 light-red b">make_cake</span>.
       </p>
 
       <h3>Dependency Inversion</h3>
-      <p class="tc i">
+      <p class="quote">
       "Depend on abstractions, not on concretions"
       </p>
 
-      <p>
+      <p class="post">
       Let's consider our <span class="f4 light-red b">Chef</span> uses a <span class="f4 light-red b">Knife</span> to cut onions, I know, sophisticated some would say.
       </p>
 
@@ -265,7 +266,7 @@
         </code>
       </pre>
 
-      <p>
+      <p class="post">
       Awesome, Onions get chopped, but if we him a <span class="f4 light-red b">Sword</span> instead of a <span class="f4 light-red b">Knife</span>, 
       <span class="f4 light-red b">Chef</span> goes mad and sets the kitchen on fire. Why? Can't a sword cut onions? 
       <br />It's beacause the Chef relies on the details of the Knife implementation, modules should not depend on each other details, they should
@@ -281,7 +282,7 @@
         </code>
       </pre>
 
-      <p>
+      <p class="post">
       <span class="f4 light-red b">Chef</span> does not need to know the particulars of the tool, the tool just needs to be able to do the work and 
       apply to certain characteristics, it should be able to cut onions with a <span class="f4 light-red b">Knife</span>, <span class="f4 light-red b">Sword</span>
       or <span class="f4 light-red b">Chainsaw</span>, as far as they have a <span class="f4 light-red">:cutting_edge</span> attribute and a <span class="f4 light-red">cut</span>
