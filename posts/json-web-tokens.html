@@ -52,7 +52,7 @@
       (<span class="normal-red"><a class="link light-red" href="https://tools.ietf.org/html/rfc7519">RFC 7519</a></span>)
       that defines a compact and safe way to transmit information between two parties as a JSON object. This object can optionally
       be <span class="bold-red">signed</span> and <span class="bold-red">encrypted</span>, signed tokens can verify the integrity 
-      of the content whitin it, while encrypted tokens hide that information form others, making the communication verifiable,
+      of the content within it, while encrypted tokens hide that information form others, making the communication verifiable,
       reliable and secret.
       </p>
 
@@ -65,7 +65,7 @@
       <span class="bold-red">* Authorization</span>: After the user is authenticated, the server can generate a JWT with 
       <span class="normal-red">claims</span> about his identity and authorization levels, such as <span class="normal-red">"logged in as 
       administrator"</span>, the client will receive this token and can include it in every further request, allowing it to access services and 
-      resources permitted with that token. This is very useful in a <span class="normal-red">Single Sing On</span> context, with a central 
+      resources permitted with that token. This is very useful in a <span class="normal-red">Single Sign On</span> context, with a central 
       identity provider and services distributed across different domains.
       </p>
 
@@ -188,7 +188,7 @@
       </code></pre>
 
       <p class="post">
-      The signature is used to verify that the message hasn't been adulterated in transit and if signed with a private key, it can also verify the legitimacy of the sender.
+      The signature is used to verify that the message hasn't been altered in transit and if signed with a private key, it can also verify the legitimacy of the sender.
       </p>
 
       <h3>How to use them in authentication?</h3>
